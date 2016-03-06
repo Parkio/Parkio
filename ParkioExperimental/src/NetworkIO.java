@@ -20,7 +20,7 @@ public class NetworkIO {
     public static void main(String[] args) throws Exception {
     	packResources(); //Load and pack resources
     	
-        HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0); //Create a new HTTP server
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0); //Create a new HTTP server
         server.createContext("/", new MyHandler()); //Create a new context
         server.setExecutor(null); 					//Create a default executor
         server.start(); 							//Start the server
