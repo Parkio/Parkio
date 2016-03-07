@@ -8,3 +8,7 @@ Open Data Parking Application
 
 To shut down the server, press the red Stop Button in Eclipse.  
 To host on the web, you must open a port.
+
+## Resource Links
+[MIS Diagram](https://drive.google.com/file/d/0B8ohLaKI3E34WWJiMTZoXzJDRW8/view?usp=sharing)  
+[Scrum Board](https://docs.google.com/spreadsheets/d/1sUa28KUN1ykEFEPOIGM65aQhVDkCDwWeD_3fIcSy97g/edit?usp=sharing)
