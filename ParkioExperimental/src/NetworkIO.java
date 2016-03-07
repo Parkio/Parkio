@@ -17,7 +17,8 @@ import com.sun.net.httpserver.HttpServer;
 public class NetworkIO {
 	private static String resources = "";
 
-    public static void main(String[] args) throws Exception {
+    @SuppressWarnings("restriction")
+	public static void main(String[] args) throws Exception {
     	packResources(); //Load and pack resources
     	
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0); //Create a new HTTP server
@@ -27,14 +28,17 @@ public class NetworkIO {
         
     }
 
-    static class MyHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange t) throws IOException {
-        	String response;
-        	if (t.getRequestHeaders().keySet().contains("Location")){
-        		String[] coords = t.getRequestHeaders().getFirst("Location").split(",");
-        		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 5)).toString();		//Get response
-        	}else{
+    static class MyHandler implements HttpHandler { //Custom handler class
+        @SuppressWarnings("restriction")
+		@Override
+        public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
+        	String response; 
+        	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
+        		String[] coords = t.getRequestHeaders().getFirst("Location").split(","); //Get the user's location from the header
+        		
+        		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
+        		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 5));		
+        	}else{ //Otherwise just give the page resources
         		response = resources;
         	}
             
@@ -47,13 +51,13 @@ public class NetworkIO {
     }
     
     static void packResources(){
-    	String result = readTextFile("Resources/template.html");
-    	result = result.replace("<<!!STYLE!!>>", readTextFile("Resources/style.css"));
-    	result = result.replace("<<!!SCRIPT!!>>", readTextFile("Resources/script.js"));
+    	String result = readTextFile("Resources/template.html"); //Get the template
+    	result = result.replace("<<!!STYLE!!>>", readTextFile("Resources/style.css")); //Add the stylesheet
+    	result = result.replace("<<!!SCRIPT!!>>", readTextFile("Resources/script.js"));//Add the script
     	resources = result;
     }
     
-    static String readTextFile(String path){
+    static String readTextFile(String path){ //Method for reading text files
     	String content ="";
     	try(BufferedReader br = new BufferedReader(new FileReader(path))) {
     	    StringBuilder sb = new StringBuilder();
