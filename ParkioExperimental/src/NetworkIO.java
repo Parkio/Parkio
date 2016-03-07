@@ -1,7 +1,6 @@
 //https://docs.oracle.com/javase/8/docs/jre/api/net/httpserver/spec/com/sun/net/httpserver/package-summary.html
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,11 +13,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+@SuppressWarnings("restriction")
 public class NetworkIO {
 	private static String resources = "";
 
-    @SuppressWarnings("restriction")
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
     	packResources(); //Load and pack resources
     	
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0); //Create a new HTTP server
@@ -29,8 +28,7 @@ public class NetworkIO {
     }
 
     static class MyHandler implements HttpHandler { //Custom handler class
-        @SuppressWarnings("restriction")
-		@Override
+        @Override
         public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
         	String response; 
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
