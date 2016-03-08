@@ -12,12 +12,37 @@ html, body {
 	overflow: hidden;
 }
 
-
-h1{
+#topbar{
 	height: 5%;
 	color: white;
+	padding-bottom: 1.5em;
 }
 
 #map{
 	height: 87%;
 }
+
+
+button {
+  text-decoration: none;
+  color: #fff;
+  background-color: black;
+
+  border: white solid;
+  border-radius: 5px;
+  padding: 5px 15px;
+
+  position: absolute;
+  left:3em;
+
+  outline: none;
+}
+
+button:active {
+  background-color: #5CA4D1;
+}
+
+button:hover {
+  background-color: #6FC6FF;
+}
+
