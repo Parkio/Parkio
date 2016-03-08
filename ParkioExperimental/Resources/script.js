@@ -87,6 +87,7 @@ function displayParkingSpaces(map, parkingSpaces){
   }
 }
 
+
 //Handles Google Maps errors
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);

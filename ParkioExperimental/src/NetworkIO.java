@@ -31,6 +31,9 @@ public class NetworkIO {
         @Override
         public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
         	String response; 
+        	
+        	packResources(); //REMOVE THIS AT ALL COSTS!!!! FOR TESTING ONLY!!! HUGELY RESOURCE INTENSIVE
+        	
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
         		String[] coords = t.getRequestHeaders().getFirst("Location").split(","); //Get the user's location from the header
         		
