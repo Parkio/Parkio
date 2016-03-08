@@ -9,6 +9,16 @@ public class Main {
 		}
 		//END PLACEHOLDER
 		
+		//return takeFirstN(sortByDistance(latitude, longitude, DatabaseInterface.read()),30);
+		
 		return result;
+	}
+	
+	static ParkingSpot[] takeFirstN(ParkingSpot[] spots, int N){
+		ParkingSpot[] newSpots = new ParkingSpot[N];
+		for (int i=0; i<N; i++){
+			newSpots[i] = spots[i];
+		}
+		return newSpots;
 	}
 }

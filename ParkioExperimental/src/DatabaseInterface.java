@@ -1,5 +1,5 @@
 
-public class DatabaseInterpret {
+public class DatabaseInterface {
 	ParkingSpot[] read(){
 		return null;
 	}
