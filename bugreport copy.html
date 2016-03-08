@@ -1,0 +1,49 @@
+<!--This is a static file. Do not serve this with a Parkio server.-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>Parkio</title>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	    <meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<style>
+			body{
+				color: white;
+				background-color: black;
+			}
+			.form-control{
+				width: 80%;
+			}
+			form{
+				margin-top:5em;
+			}
+		</style>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-9">
+		<form role="form" action="//formspree.io/thomasmullendesign@mailinator.com" method="POST">
+			<h1>Did we miss something?</h1>
+			<h4>Please fill in this form and we will investigate your issue.</h4>
+			<div class="form-group">
+		    	<label for="email">Optional email address:</label>
+		    	<input type="email" class="form-control" id="email">
+		 	</div>
+			<div class="form-group">
+		    	<label>Description of issue:</label>
+		    	<textarea type="textarea" rows="4" class="form-control" id="desc"></textarea>
+		 	</div>
+		 	<div class="form-group">
+		    	<label >Steps to recreate issue:</label>
+		    	<textarea type="textarea" rows="5" class="form-control" id="step"></textarea>
+		 	</div>
+
+
+		  	<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+		</div>
+	</div>
+	</body>
+</html>
