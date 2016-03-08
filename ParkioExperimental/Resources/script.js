@@ -64,7 +64,8 @@ function initMap() {
         {
             position: Latlng_0,
             title:"Parking Space",
-            icon: image
+            icon: image,
+            fullscreenControl: false
         }
       );
 
