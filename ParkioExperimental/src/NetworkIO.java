@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-//To fix access restriction errors...
-//Project properties -> Java Compiler -> Errors/Warnings -> Deprecated and restricted API --> Forbidden Reference --> Warning
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -20,9 +20,13 @@ public class NetworkIO {
     public static void main(String[] args) throws Exception {
     	packResources(); //Load and pack resources
     	
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0); //Create a new HTTP server
+    	int port = 8080; //Set the port here
+    	
+        HttpServer server = HttpServer.create(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), port), 0); //Create a new HTTP server
         server.createContext("/", new MyHandler()); //Create a new context
         server.setExecutor(null); 					//Create a default executor
+        
+        System.out.println("Server online on "+InetAddress.getLocalHost().getHostAddress()+":"+port); //Print start message to console
         server.start(); 							//Start the server
         
     }
@@ -37,16 +41,17 @@ public class NetworkIO {
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
         		String[] coords = t.getRequestHeaders().getFirst("Location").split(","); //Get the user's location from the header
         		
-        		System.out.println("User located at latitude "+coords[0]+" longitude "+coords[1]);
+        		System.out.println("User located at latitude "+coords[0]+" longitude "+coords[1]); //Console log
         		
         		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
+        		System.out.println(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25)[0].getLat());
         		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		
         	}else{ //Otherwise just give the page resources
         		
         		System.out.println("User loaded page.");
         		response = resources;
         	}
-            
+        	
             t.sendResponseHeaders(200, response.length()); 	//Send OK header
             OutputStream os = t.getResponseBody();			//Get the response
             
@@ -56,6 +61,7 @@ public class NetworkIO {
     }
     
     static void packResources(){
+    	System.out.println("Packed resources.");
     	String result = readTextFile("Resources/template.html"); //Get the template
     	result = result.replace("<<!!STYLE!!>>", readTextFile("Resources/style.css")); //Add the stylesheet
     	result = result.replace("<<!!SCRIPT!!>>", readTextFile("Resources/script.js"));//Add the script

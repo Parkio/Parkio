@@ -1,4 +1,6 @@
 //Parkio 2016
+var markers = [];
+var userPosition;
 
 var defaultPos = { //Default position (in New York test area)
       lat: 40.7127,
@@ -7,59 +9,82 @@ var defaultPos = { //Default position (in New York test area)
 
 //Initializes the map
 function initMap() {
-  getParkingSpots("",function(data, auxData){       //Get parking data
-    var parkingSpaces=JSON.parse(data)["spots"];//Parse JSON data
-
-    pos = auxData[0];
-    infoMessage = auxData[1];
-
+  getLocation(function(infoMessage){ //Get user's location
     var map = new google.maps.Map(document.getElementById('map'), { //Make a new map
       zoom: 15,                                 //Set zoom level
       mapTypeId: google.maps.MapTypeId.ROADMAP, //Set type to roadmap
       fullscreenControl: false                  //Disable full screen
     });
 
-    
     var infoWindow = new google.maps.InfoWindow({map: map}); //Make a new info window
     infoWindow.setPosition(pos);        //Set position of info window
     infoWindow.setContent(infoMessage); //Set the text content of the info window
 
-    map.setCenter(pos);   //Center the map on the user (or default position)
+    map.setCenter(userPosition);   //Center the map on the user (or default position)
 
-    //Now display all parking spaces
-    displayParkingSpaces(map, parkingSpaces);
+    getParkingSpots(userPosition, function(data){       //Get parking data
+      var parkingSpaces=JSON.parse(data)["spots"];//Parse JSON data
+
+      //Now display all parking spaces
+      clearMarkers();
+      buildMarkers(parkingSpaces);
+      displayMarkers(map);
+
+      //Now add drag listeners.
+      map.addListener('dragend', function() { //When the center of the map is changed...
+        var center = map.getCenter(); //Get the center of the map
+        var pos = {
+          lat: center.lat(), 
+          lng: center.lng()
+        };
+
+        getParkingSpots(pos, function(data){       //Get parking data
+          var parkingSpaces = JSON.parse(data)["spots"];  //Parse JSON data
+          clearMarkers();
+          buildMarkers(parkingSpaces); //Now display all parking spaces
+          displayMarkers(map);
+        });
+
+      });
+   });
   });
 }
 
 //Gets parking spots near the user
-function getParkingSpots(url, callback){ //URL is the server's url, dallback is the function the data will be passed into
+function getParkingSpots(pos, callback){ //pos is the center position, callback is the function the data will be passed into
+  sendToServer("GET", "", [["Location",pos.lat+","+pos.lng]], callback); //Send position to the server
+}
+
+function getLocation(callback){
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) { //Ask for user's location
-      var pos = {
+      pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-
-      sendToServer("GET", url, [["Location",pos.lat+","+pos.lng]], callback, [pos,"You are here."]); //Send position to the server
+      userPosition = pos;
+      callback("You are here.");
     },
-    function(error){ //If permission is denied...
-      //Send default position.
-      sendToServer("GET", url, [["Location",pos.lat+","+pos.lng]], callback, [defaultPos,"Enable geolocation to see your location."]);
-    });
+      function(error){ //If permission is denied...
+      userPosition = defaultPos;
+      callback("Enable geolocation for a better experience.");
+    }
+    );
   }else{ //If geolocation is not supported...
-    //Send default position.
-    sendToServer("GET", url, [["Location",pos.lat+","+pos.lng]], callback, [defaultPos,"Browser does not support geolocation."]);
+    userPosition = defaultPos;
+    callback(defaultPos,"Geolocation is not supported on your browser.");
   }
 }
 
 //Sends a HTTP request to the server
-function sendToServer(method, url, headers, callback, auxData){ //auxData is not used, simply passed to callback
+function sendToServer(method, url, headers, callback){
       var xmlHttp = new XMLHttpRequest();  //New request object
 
       xmlHttp.onreadystatechange = function() {  //When server responds...
-          if (xmlHttp.readyState == 4 && xmlHttp.status == 200) //If response is ready and OK
-              callback(xmlHttp.responseText, auxData); //Pass the response to the callback, along with the auxillary data
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200){ //If response is ready and OK
+              callback(xmlHttp.responseText); //Pass the response to the callback, along with the auxillary data
+          }
       }
 
       xmlHttp.open(method, url, true); // true for asynchronous calls
@@ -69,22 +94,35 @@ function sendToServer(method, url, headers, callback, auxData){ //auxData is not
       xmlHttp.send(); //Send the request
 }
 
-//Display coordinates on the map with custom markers
-function displayParkingSpaces(map, parkingSpaces){
+//Convert parkingSpaces to markers (doesn't display)
+function buildMarkers(parkingSpaces){
   var imageURL = 'http://s22.postimg.org/9ta46k47h/icon.png'; //Marker icon URL
 
+  //Build markers
   for (var i=0; i<parkingSpaces.length; i++){ //Iterate across parking spaces
-    var Latlng_0 = new google.maps.LatLng(parseFloat(parkingSpaces[i]["lat"]),parseFloat(parkingSpaces[i]["lng"])); //Parse Lat and Lng
-    var marker_0 = new google.maps.Marker( //Make a new marker
+    var markerLatLng = new google.maps.LatLng(parseFloat(parkingSpaces[i]["lat"]),parseFloat(parkingSpaces[i]["lng"])); //Parse Lat and Lng
+    var newMarker= new google.maps.Marker( //Make a new marker
       {
-          position: Latlng_0,       //Set position
+          position: markerLatLng,       //Set position
           title:"Parking Space",    //Set title (not used)
           icon: imageURL           //Set the custom appearance 
       }
     );
-
-    marker_0.setMap(map); //Add it to the map
+    markers.push(newMarker);
   }
+}
+
+//Displays markers
+function displayMarkers(map){
+  for (var i=0; i<markers.length; i++){ //Iterate across parking spaces
+    markers[i].setMap(map); //Add it to the map
+  }
+}
+
+//Deletes all markers
+function clearMarkers(){
+  displayMarkers(null); //Move markers to 'null map'
+  markers = []; //Clear their references
 }
 
 

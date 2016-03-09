@@ -19,4 +19,8 @@ public class ParkingSpot {
 		 
 		 return result;
 	}
+	
+	public double getLat(){
+		return latitude;
+	}
 }
