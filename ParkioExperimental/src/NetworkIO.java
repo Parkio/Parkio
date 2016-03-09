@@ -36,15 +36,12 @@ public class NetworkIO {
         public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
         	String response; 
         	
-        	packResources(); //REMOVE THIS AT ALL COSTS!!!! FOR TESTING ONLY!!! HUGELY RESOURCE INTENSIVE
-        	
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
         		String[] coords = t.getRequestHeaders().getFirst("Location").split(","); //Get the user's location from the header
         		
         		System.out.println("User located at latitude "+coords[0]+" longitude "+coords[1]); //Console log
         		
         		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
-        		System.out.println(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25)[0].getLat());
         		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		
         	}else{ //Otherwise just give the page resources
         		
