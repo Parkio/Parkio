@@ -39,7 +39,7 @@ public class NetworkIO {
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
         		String[] coords = t.getRequestHeaders().getFirst("Location").split(","); //Get the user's location from the header
         		
-        		System.out.println("User located at latitude "+coords[0]+" longitude "+coords[1]); //Console log
+        		System.out.println("User requested latitude "+coords[0]+" longitude "+coords[1]); //Console log
         		
         		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
         		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		

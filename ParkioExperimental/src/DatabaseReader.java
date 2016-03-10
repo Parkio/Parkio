@@ -33,7 +33,7 @@ public class DatabaseReader {
 	private static ArrayList<String> parseCSVRow(String csvRow) {
 		ArrayList<String> result = new ArrayList<String>(); //Store columns in arrayList
 		
-			String[] splitRow = csvRow.split("\\s*,\\s*");	//Split the row via regex
+			String[] splitRow = csvRow.split("\\s*,\\s*");	//Split the row via regex (kleene whitespace comma kleene whitespace)
 			for (int i = 0; i < splitRow.length; i++) {		//Iterate across columns
 				result.add(splitRow[i].trim());				//Add column to row
 			}
