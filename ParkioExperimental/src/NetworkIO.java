@@ -18,6 +18,7 @@ class NetworkIO {
 	
 	public static void main(String[] args) throws Exception{
     	packResources(); //Load and pack resources
+    	Main.initialize();
     	
     	int port = 8080; //Set the port here
     	
