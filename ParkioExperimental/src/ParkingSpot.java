@@ -2,6 +2,7 @@
 class ParkingSpot{
 	private double latitude, longitude;
 	private String description;
+	private double r;	//Precomputed radius
 	//Need availability etc...
 	
 	ParkingSpot(double latitude, double longitude, String description){ //Constructor
@@ -24,7 +25,15 @@ class ParkingSpot{
 		return this.serialize();
 	}
 	
-	double distanceToPoint(double lat, double lng){
+	void precomputeDistance(double lat, double lng){
+		r = this.distanceToPoint(lat, lng);
+	}
+	
+	double getR(){ //Returns the precomputed R
+		return r;
+	}
+	
+	private double distanceToPoint(double lat, double lng){
 		//Uses the Haversine formula
 		int R = 6371000; // metres
 		double omega1 = Math.toRadians(lat);

@@ -20,7 +20,7 @@ class NetworkIO {
     	packResources(); //Load and pack resources
     	Main.initialize();
     	
-    	int port = 8082; //Set the port here
+    	int port = 8080; //Set the port here
     	
         HttpServer server = HttpServer.create(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), port), 0); //Create a new HTTP server
         server.createContext("/", new MyHandler()); //Create a new context
