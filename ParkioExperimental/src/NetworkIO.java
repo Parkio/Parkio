@@ -8,16 +8,15 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 @SuppressWarnings("restriction")
-public class NetworkIO {
+class NetworkIO {
 	private static String resources = "";
 
-    public static void runServer() throws Exception {
+    static void runServer() throws Exception {
     	packResources(); //Load and pack resources
     	
     	int port = 8080; //Set the port here
@@ -58,7 +57,7 @@ public class NetworkIO {
         }
     }
     
-    static void packResources(){
+    private static void packResources(){
     	System.out.println("Packed resources.");
     	String result = readTextFile("Resources/template.html"); //Get the template
     	result = result.replace("<<!!STYLE!!>>", readTextFile("Resources/style.css")); //Add the stylesheet
@@ -66,7 +65,7 @@ public class NetworkIO {
     	resources = result;
     }
     
-    static String readTextFile(String path){ //Method for reading text files
+    private static String readTextFile(String path){ //Method for reading text files
     	String content ="";
     	try(BufferedReader br = new BufferedReader(new FileReader(path))) {
     	    StringBuilder sb = new StringBuilder();

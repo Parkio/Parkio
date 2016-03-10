@@ -1,5 +1,5 @@
 
-public class Parser {
+class Parser {
 	static String serialize(ParkingSpot[] spots){ //JSON serialize an array of ParkingSpot objects
 		String result = "{ \"spots\":["; //Create object with array named "spots"
 			

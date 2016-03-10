@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class DatabaseInterface {
+class DatabaseInterface {
 	static ParkingSpot[] spots;
 	
-	public static void load(){
+	static void load(){
 		ArrayList<ArrayList<String>> data = DatabaseReader.read(); //Read from the database
 		spots = new ParkingSpot[data.size()]; //Make an array of the correct size
 		
@@ -15,7 +15,7 @@ public class DatabaseInterface {
 		}
 	}
 	
-	public static ParkingSpot[] get(){
+	static ParkingSpot[] get(){
 		return spots;
 	}
 }

@@ -3,8 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DatabaseReader {
-	public static ArrayList<ArrayList<String>> read(){ //Need to decide on a return type
+class DatabaseReader {
+	static ArrayList<ArrayList<String>> read(){ //Need to decide on a return type
 		
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(); //Store csv data in a 2d array
 		BufferedReader reader = null; //Use a buffered reader to read

@@ -1,5 +1,5 @@
 
-public class ParkingSpot {
+class ParkingSpot {
 	private double latitude, longitude;
 	private String description;
 	//Need availability etc...
@@ -20,7 +20,7 @@ public class ParkingSpot {
 		 return result;
 	}
 	
-	public double getLat(){
+	double getLat(){
 		return latitude;
 	}
 }

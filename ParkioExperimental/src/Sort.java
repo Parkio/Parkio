@@ -1,6 +1,9 @@
+import java.util.Arrays;
 
-public class Sort {
-	ParkingSpot[] sortByDistance(int lat, int lng, ParkingSpot[] spots){
-		return null;
+class Sort {
+	static ParkingSpot[] sortByDistance(double lat, double lng, ParkingSpot[] spots){
+		ParkingSpot[] sortedSpots = spots;
+		Arrays.sort(sortedSpots);
+		return sortedSpots;
 	}
 }
