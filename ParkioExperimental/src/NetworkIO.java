@@ -18,7 +18,7 @@ class NetworkIO {
 	
 	public static void main(String[] args) throws Exception{
     	packResources(); //Load and pack resources
-    	Main.initialize();
+    	Core.initialize();
     	
     	int port = 8080; //Set the port here
     	
@@ -43,7 +43,7 @@ class NetworkIO {
         		System.out.println("User requested latitude "+coords[0]+" longitude "+coords[1]); //Console log
         		
         		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
-        		response = Parser.serialize(Main.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		
+        		response = Parser.serialize(Core.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		
         	}else{ //Otherwise just give the page resources
         		
         		System.out.println("User loaded page.");

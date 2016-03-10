@@ -1,4 +1,4 @@
-public class Main {
+public class Core { //Connects server to database and search/sort engine
 	
 	static void initialize(){
 		DatabaseInterface.load();
