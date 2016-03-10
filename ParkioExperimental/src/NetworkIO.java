@@ -17,7 +17,7 @@ import com.sun.net.httpserver.HttpServer;
 public class NetworkIO {
 	private static String resources = "";
 
-    public static void main(String[] args) throws Exception {
+    public static void runServer() throws Exception {
     	packResources(); //Load and pack resources
     	
     	int port = 8080; //Set the port here
@@ -31,7 +31,7 @@ public class NetworkIO {
         
     }
 
-    static class MyHandler implements HttpHandler { //Custom handler class
+    private static class MyHandler implements HttpHandler { //Custom handler class
         @Override
         public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
         	String response; 
@@ -54,6 +54,7 @@ public class NetworkIO {
             
             os.write(response.getBytes());					//Send response
             os.close();	//Close the exchange
+            System.out.println("Request filled."); //Console log
         }
     }
     
