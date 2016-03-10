@@ -3,6 +3,7 @@ Open Data Parking Application
 
 ## Resource Links
 [Scrum Board](https://docs.google.com/spreadsheets/d/1sUa28KUN1ykEFEPOIGM65aQhVDkCDwWeD_3fIcSy97g/edit?usp=sharing)  
+[Data Sets](http://www.nyc.gov/html/dot/html/about/datafeeds.shtml#parking)  
 [MIS Diagram](https://drive.google.com/file/d/0B8ohLaKI3E34WWJiMTZoXzJDRW8/view?usp=sharing)  
 
 
