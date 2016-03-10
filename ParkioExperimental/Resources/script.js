@@ -3,8 +3,8 @@ var markers = [];
 var userPosition;
 
 var defaultPos = { //Default position (in New York test area)
-      lat: 40.7127,
-      lng: -74.0059
+      lat: 40.7211671197085,
+      lng: -73.98785478029151
     };
 
 //Initializes the map
@@ -98,6 +98,11 @@ function sendToServer(method, url, headers, callback){
 function buildMarkers(parkingSpaces){
   var imageURL = 'http://s22.postimg.org/9ta46k47h/icon.png'; //Marker icon URL
 
+  var image = {
+    url : imageURL,
+    scaledSize: new google.maps.Size(20, 20)
+  }
+
   //Build markers
   for (var i=0; i<parkingSpaces.length; i++){ //Iterate across parking spaces
     var markerLatLng = new google.maps.LatLng(parseFloat(parkingSpaces[i]["lat"]),parseFloat(parkingSpaces[i]["lng"])); //Parse Lat and Lng
@@ -105,7 +110,7 @@ function buildMarkers(parkingSpaces){
       {
           position: markerLatLng,       //Set position
           title:"Parking Space",    //Set title (not used)
-          icon: imageURL           //Set the custom appearance 
+          icon: image           //Set the custom appearance 
       }
     );
     markers.push(newMarker);
