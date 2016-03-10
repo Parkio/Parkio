@@ -15,8 +15,8 @@ import com.sun.net.httpserver.HttpServer;
 @SuppressWarnings("restriction")
 class NetworkIO {
 	private static String resources = "";
-
-    static void runServer() throws Exception {
+	
+	public static void main(String[] args) throws Exception{
     	packResources(); //Load and pack resources
     	
     	int port = 8080; //Set the port here

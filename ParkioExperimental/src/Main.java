@@ -1,8 +1,7 @@
 public class Main {
 	
-	public static void main(String[] args) throws Exception{
+	static void initialize(){
 		DatabaseInterface.load();
-		NetworkIO.runServer();
 	}
 	
 	//Returns the 'count' # of ParkingSpots closest to the given point.

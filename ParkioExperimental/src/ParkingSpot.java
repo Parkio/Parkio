@@ -1,5 +1,5 @@
 
-class ParkingSpot {
+class ParkingSpot{
 	private double latitude, longitude;
 	private String description;
 	//Need availability etc...
@@ -20,7 +20,11 @@ class ParkingSpot {
 		 return result;
 	}
 	
-	double getLat(){
-		return latitude;
+	public String toString(){
+		return this.serialize();
+	}
+	
+	double distanceToPoint(double lat, double lng){
+		return Math.sqrt(Math.pow(this.latitude-lat,2)+Math.pow(this.longitude-lng,2));
 	}
 }
