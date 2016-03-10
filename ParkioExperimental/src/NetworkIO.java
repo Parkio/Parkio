@@ -20,7 +20,7 @@ class NetworkIO {
     	packResources(); //Load and pack resources
     	Main.initialize();
     	
-    	int port = 8080; //Set the port here
+    	int port = 8082; //Set the port here
     	
         HttpServer server = HttpServer.create(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), port), 0); //Create a new HTTP server
         server.createContext("/", new MyHandler()); //Create a new context
@@ -34,6 +34,7 @@ class NetworkIO {
     private static class MyHandler implements HttpHandler { //Custom handler class
         @Override
         public void handle(HttpExchange t) throws IOException { //Method to handle HTTP exchanges
+        	long t1 = System.nanoTime(); //Start timer
         	String response; 
         	
         	if (t.getRequestHeaders().keySet().contains("Location")){ //If the Location header is in the request, return ParkingSpots
@@ -54,7 +55,9 @@ class NetworkIO {
             
             os.write(response.getBytes());					//Send response
             os.close();	//Close the exchange
-            System.out.println("Request filled."); //Console log
+            
+            double dt = (double)(System.nanoTime() - t1)/ 1000000000.0; //End timer
+            System.out.println("Request filled in "+ dt+ " seconds."); //Console log
         }
     }
     
