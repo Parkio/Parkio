@@ -7,8 +7,10 @@ public class Main {
 	//Returns the 'count' # of ParkingSpots closest to the given point.
 	static ParkingSpot[] getNearbySpots(double lat, double lng, int count){ //Get nearest spots
 		ParkingSpot[] response = DatabaseInterface.get();
+		
+		System.out.println(response[0].distanceToPoint(lat, lng));
 		response = Sort.sortByDistance(lat, lng, response);
-		response = takeFirstN(response, 40);
+		response = takeFirstN(response, 50);
 		return response;
 	}
 	
