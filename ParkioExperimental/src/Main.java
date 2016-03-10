@@ -4,16 +4,9 @@ public class Main {
 	static ParkingSpot[] getNearbySpots(double latitude, double longitude, int count){ //Get nearest spots
 		ParkingSpot[] result;
 		
-		//PLACEHOLDER
-		result = new ParkingSpot[count];
-		for (int i=0; i<count; i++){
-			result[i] = new ParkingSpot(latitude+Math.random()/50-Math.random()/50, longitude+Math.random()/50-Math.random()/50, "A Parking Spot");
-		}
-		//END PLACEHOLDER
 		
-		//return takeFirstN(sortByDistance(latitude, longitude, DatabaseInterface.read()),30);
-		
-		return result;
+		return takeFirstN(DatabaseInterface.read(),30);
+
 	}
 	
 	//Takes first N items from an array
