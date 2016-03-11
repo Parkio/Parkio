@@ -9,43 +9,64 @@ var defaultPos = { //Default position (in New York test area)
 
 //Initializes the map
 function initMap() {
-  getLocation(function(infoMessage){ //Get user's location
+  getLocation(function(){ //Get user's location
     var map = new google.maps.Map(document.getElementById('map'), { //Make a new map
-      zoom: 15,                                 //Set zoom level
+      zoom: 17,                                 //Set zoom level
       mapTypeId: google.maps.MapTypeId.ROADMAP, //Set type to roadmap
-      fullscreenControl: false                  //Disable full screen
+      fullscreenControl: false,                  //Disable full screen
+      center: defaultPos
     });
-
-    var infoWindow = new google.maps.InfoWindow({map: map}); //Make a new info window
-    infoWindow.setPosition(pos);        //Set position of info window
-    infoWindow.setContent(infoMessage); //Set the text content of the info window
-
-    map.setCenter(userPosition);   //Center the map on the user (or default position)
 
     getParkingSpots(userPosition, function(data){       //Get parking data
       var parkingSpaces=JSON.parse(data)["spots"];//Parse JSON data
+      map.panTo(new google.maps.LatLng(parkingSpaces[0]["lat"],parkingSpaces[0]["lng"])); //Move to nearest parking spot
 
       //Now display all parking spaces
       clearMarkers();
       buildMarkers(parkingSpaces);
       displayMarkers(map);
 
-      //Now add drag listeners.
-      map.addListener('dragend', function() { //When the center of the map is changed...
+
+      //Function to update markers
+      function updateMarkers(){
+        if (rateFreeze){
+          return;
+        }else{
+          rateFreeze=true;
+        }
         var center = map.getCenter(); //Get the center of the map
         var pos = {
           lat: center.lat(), 
           lng: center.lng()
         };
-
-        getParkingSpots(pos, function(data){       //Get parking data
-          var parkingSpaces = JSON.parse(data)["spots"];  //Parse JSON data
+        var zoom = map.getZoom();
+        if (zoom >= 17) { //No markers until zoom 17
+          getParkingSpots(pos, function(data){       //Get parking data
+            var parkingSpaces = JSON.parse(data)["spots"];  //Parse JSON data
+            clearMarkers();
+            buildMarkers(parkingSpaces); //Now display all parking spaces
+            displayMarkers(map);
+          });
+        }else{
           clearMarkers();
-          buildMarkers(parkingSpaces); //Now display all parking spaces
-          displayMarkers(map);
-        });
+        }
+      }
 
+      //Now add movement listeners.
+      map.addListener('center_changed', function() { //When the center of the map is changed...
+        updateMarkers();
       });
+      map.addListener('dragend', function(){
+        updateMarkers();
+      });
+      map.addListener('zoom_changed', function() { //When the center of the map is changed...
+        updateMarkers();
+      });
+
+      window.setInterval(function(){updateMarkers()}, 2000); //Refresh every 2 seconds
+
+      //Initial update
+      updateMarkers();
    });
   });
 }
@@ -59,21 +80,20 @@ function getLocation(callback){
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) { //Ask for user's location
-      pos = {
+      userPosition = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-      userPosition = pos;
-      callback("You are here.");
+      callback();
     },
       function(error){ //If permission is denied...
       userPosition = defaultPos;
-      callback("Enable geolocation for a better experience.");
+      callback();
     }
     );
   }else{ //If geolocation is not supported...
     userPosition = defaultPos;
-    callback(defaultPos,"Geolocation is not supported on your browser.");
+    callback();
   }
 }
 
@@ -114,6 +134,11 @@ function buildMarkers(parkingSpaces){
       }
     );
     markers.push(newMarker);
+
+    markers.push(new google.maps.Marker({
+        position: userPosition,
+        title: "You are here"
+      }));
   }
 }
 
@@ -132,9 +157,11 @@ function clearMarkers(){
 
 
 //Handles Google Maps errors
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
+function handleLocationError(browserHasGeolocation, pos) {
+  alert("Geolocation failed.")
 }
+
+var rateFreeze;
+window.setInterval(function(){rateFreeze = false;}, 300); //Freeze rate at 300ms
+
+
