@@ -63,13 +63,19 @@ function initMap() {
         updateMarkers();
       });
 
-      window.setInterval(function(){updateMarkers()}, 2000); //Refresh every 2 seconds
+      $(document).mouseup(function(){
+        updateMarkers();
+      })
 
       //Initial update
       updateMarkers();
    });
   });
 }
+
+
+
+
 
 //Gets parking spots near the user
 function getParkingSpots(pos, callback){ //pos is the center position, callback is the function the data will be passed into
@@ -114,18 +120,26 @@ function sendToServer(method, url, headers, callback){
       xmlHttp.send(); //Send the request
 }
 
-//Convert parkingSpaces to markers (doesn't display)
-function buildMarkers(parkingSpaces){
-  var imageURL = 'http://s22.postimg.org/9ta46k47h/icon.png'; //Marker icon URL
 
-  var image = {
-    url : imageURL,
+//Lookup table for image urls
+var imageLookup = {
+  "basic" : function(){return ;},
+}
+
+function getParkingSpaceImage(parkingSpace){
+  return {
+    url : "http://s22.postimg.org/9ta46k47h/icon.png",
     scaledSize: new google.maps.Size(20, 20)
   }
+}
 
+//Convert parkingSpaces to markers (doesn't display)
+function buildMarkers(parkingSpaces){
   //Build markers
   for (var i=0; i<parkingSpaces.length; i++){ //Iterate across parking spaces
     var markerLatLng = new google.maps.LatLng(parseFloat(parkingSpaces[i]["lat"]),parseFloat(parkingSpaces[i]["lng"])); //Parse Lat and Lng
+    var image = getParkingSpaceImage(parkingSpaces[i]);
+
     var newMarker= new google.maps.Marker( //Make a new marker
       {
           position: markerLatLng,       //Set position
@@ -163,5 +177,4 @@ function handleLocationError(browserHasGeolocation, pos) {
 
 var rateFreeze;
 window.setInterval(function(){rateFreeze = false;}, 300); //Freeze rate at 300ms
-
 
