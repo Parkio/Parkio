@@ -11,7 +11,7 @@ class DatabaseReader {
 		
 		try {
 			String line;
-			reader = new BufferedReader(new FileReader("data/latlng.csv")); //Open the file and instantiate the reader
+			reader = new BufferedReader(new FileReader("data/parking.csv")); //Open the file and instantiate the reader
 			
 			while ((line = reader.readLine()) != null) { //Iterate across rows
 				result.add(parseCSVRow(line));	//Add the parsed row

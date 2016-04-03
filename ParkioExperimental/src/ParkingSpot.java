@@ -1,17 +1,17 @@
 
 class ParkingSpot{
 	private double latitude, longitude;
-	private String description, days;
+	private String description;
 	private double r;	//Precomputed radius
-	private int start, end;
+	private double start, end, hours;
 	
-	ParkingSpot(double latitude, double longitude, String description){ //Constructor
+	ParkingSpot(double latitude, double longitude, String description, double start, double end, double hours){ //Constructor
 		this.latitude = latitude;      //Initialize private variables
 		this.longitude = longitude;
 		this.description = description;
-		this.start = -1;
-		this.end = -1;
-		this.days = "All Week";
+		this.start = start;
+		this.end = end;
+		this.hours = hours;
 	}
 	
 	String serialize(){ //Serialize into JSON object
@@ -19,9 +19,9 @@ class ParkingSpot{
 		 result += "\"lat\":"+Double.toString(this.latitude)+",";
 		 result += "\"lng\":"+Double.toString(this.longitude)+",";
 		 result += "\"desc\":\""+this.description+"\"" + ",";
-		 result += "\"start\":" + Integer.toString(this.start) +",";
-		 result += "\"end\":" + Integer.toString(this.end) +",";
-		 result += "\"days\":\"" + this.days +"\"";
+		 result += "\"start\":" + Double.toString(this.start) +",";
+		 result += "\"end\":" + Double.toString(this.end) +",";
+		 result += "\"hours\":" + Double.toString(this.hours);
 		 result += "}";
 		 
 		 return result;
