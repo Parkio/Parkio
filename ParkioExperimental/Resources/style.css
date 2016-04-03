@@ -32,9 +32,6 @@ button {
   border-radius: 5px;
   padding: 5px 15px;
 
-  position: absolute;
-  left:3em;
-
   outline: none;
 
   cursor: pointer;

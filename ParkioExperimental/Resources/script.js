@@ -1,6 +1,7 @@
 //Parkio 2016
 var markers = [];
 var userPosition;
+var onlyAvail = false;
 
 var defaultPos = { //Default position (in New York test area)
     lat: 40.7211671197085,
@@ -158,6 +159,10 @@ function buildMarkers(parkingSpaces) {
         var markerLatLng = new google.maps.LatLng(parseFloat(parkingSpaces[i]["lat"]), parseFloat(parkingSpaces[i]["lng"])); //Parse Lat and Lng
         var image = getParkingSpaceImage(timeHours, parkingSpaces[i]);
 
+        if (onlyAvail && image.url == "http://s23.postimg.org/txyppobh3/red.png"){ //Skip when filtering
+            continue; 
+        }
+
         var newMarker = new google.maps.Marker( //Make a new marker
             {
                 position: markerLatLng, //Set position
@@ -192,6 +197,11 @@ function clearMarkers() {
 function handleLocationError(browserHasGeolocation, pos) {
     alert("Geolocation failed.")
 }
+
+document.getElementById("toggle").addEventListener("click",
+function(){
+    onlyAvail = !onlyAvail;
+});
 
 var rateFreeze;
 window.setInterval(function() {
