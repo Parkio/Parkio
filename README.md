@@ -1,6 +1,8 @@
 # Parkio
 Open Data Parking Application
 
+<img src="http://s16.postimg.org/rglkwskkl/Screen_Shot_2016_04_03_at_1_37_12_PM.png" width=600>
+
 ## Resource Links
 [Scrum Board](https://docs.google.com/spreadsheets/d/1sUa28KUN1ykEFEPOIGM65aQhVDkCDwWeD_3fIcSy97g/edit?usp=sharing)  
 [Data Sets](http://www.nyc.gov/html/dot/html/about/datafeeds.shtml#parking)  
