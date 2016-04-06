@@ -9,7 +9,7 @@ public class Core { //Connects server to database and search/sort engine
 		ParkingSpot[] response = DatabaseInterface.get();
 		
 		response = Sort.sortByDistance(lat, lng, response);
-		response = takeFirstN(response, 700);
+		response = takeFirstN(response, 300);
 		return response;
 	}
 	
