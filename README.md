@@ -17,5 +17,4 @@ Open Data Parking Application
 
 Note: You must open a port for global internet use. Parkio runs on port 8081 by default.
 
-To shut down the server, press the red Stop Button in Eclipse.  
-To host on the web, you must open a port.
+Make sure to properly kill the program, or your network resources will be tied up, requiring a restart to run Parkio again.
