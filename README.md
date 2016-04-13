@@ -13,7 +13,9 @@ Open Data Parking Application
 
 ## Host Parkio Server
 1. Run the NetworkIO java class.
-2. The local IP will be displayed in console. You must open a port on your router for global access.
+2. The local IP will be displayed in console. Enter this in a web browser to use.
+
+Note: You must open a port for global internet use. Parkio runs on port 8081 by default.
 
 To shut down the server, press the red Stop Button in Eclipse.  
 To host on the web, you must open a port.
