@@ -12,9 +12,8 @@ Open Data Parking Application
 <img src="http://s21.postimg.org/q4y42fcxz/Parkio_MIS.png" width="300">
 
 ## Host Parkio Server
-1. Open ParkioExperimental in Eclipse.
-2. Run the Project.
-3. The local IP will be displayed in console. You must open a port on your router.
+1. Run the NetworkIO java class.
+2. The local IP will be displayed in console. You must open a port on your router for global access.
 
 To shut down the server, press the red Stop Button in Eclipse.  
 To host on the web, you must open a port.
