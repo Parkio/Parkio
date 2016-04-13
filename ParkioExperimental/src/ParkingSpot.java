@@ -27,10 +27,6 @@ class ParkingSpot{
 		 return result;
 	}
 	
-	public String toString(){
-		return this.serialize();
-	}
-	
 	void precomputeDistance(double lat, double lng){
 		r = this.distanceToPoint(lat, lng);
 	}
