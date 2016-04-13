@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 class DatabaseReader {
-	static ArrayList<ArrayList<String>> read(){ //Need to decide on a return type
+	static ArrayList<ArrayList<String>> read(){
 		
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(); //Store csv data in a 2d array
 		BufferedReader reader = null; //Use a buffered reader to read
