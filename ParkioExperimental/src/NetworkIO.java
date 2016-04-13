@@ -43,7 +43,7 @@ class NetworkIO {
         		System.out.println(t.getRemoteAddress()+" requested latitude "+coords[0]+" longitude "+coords[1]); //Console log
         		
         		//			Json Serialize	  Get Nearby Parking Spots		Parse latitude and longitude doubles
-        		response = Parser.serialize(Core.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 25));		
+        		response = serialize(Core.getNearbySpots(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), 300));		
         	}else{ //Otherwise just give the page resources
         		
         		System.out.println(t.getRemoteAddress()+" loaded page.");
@@ -60,6 +60,21 @@ class NetworkIO {
             System.out.println("Request filled in "+ dt+ " seconds."); //Console log
         }
     }
+    
+
+    private static String serialize(ParkingSpot[] arr){ //JSON serialize an array of serializable ParkingSpot objects
+    		String result = "{ \"spots\":["; //Create object with array named "spots"
+    			
+    		for (int i=0; i<arr.length; i++){ //Iterate across array
+    			result += arr[i].serialize(); //Serialize individual objects
+    			if (i != arr.length-1){ //No comma at end of array
+    				result+= ",";
+    			}
+    		}
+    		result+="]}"; //Close array and object
+    		
+    		return result;
+    	}
     
     private static void packResources(){
     	System.out.println("Packed resources.");

@@ -40,17 +40,12 @@ function initMap() {
                     lat: center.lat(),
                     lng: center.lng()
                 };
-                var zoom = map.getZoom();
-                if (zoom >= 17) { //No markers until zoom 17
-                    getParkingSpots(pos, function(data) { //Get parking data
-                        var parkingSpaces = JSON.parse(data)["spots"]; //Parse JSON data
-                        clearMarkers();
-                        buildMarkers(parkingSpaces); //Now display all parking spaces
-                        displayMarkers(map);
-                    });
-                } else {
+                getParkingSpots(pos, function(data) { //Get parking data
+                    var parkingSpaces = JSON.parse(data)["spots"]; //Parse JSON data
                     clearMarkers();
-                }
+                    buildMarkers(parkingSpaces); //Now display all parking spaces
+                    displayMarkers(map);
+                });
             }
 
             //Now add movement listeners.
@@ -166,7 +161,7 @@ function buildMarkers(parkingSpaces) {
         var newMarker = new google.maps.Marker( //Make a new marker
             {
                 position: markerLatLng, //Set position
-                title: parkingSpaces[i]["desc"], //Set title (not used)
+                title: parkingSpaces[i]["desc"]+ " ~ "+parkingSpaces[i]["hours"]+" hours", //Set title
                 icon: image //Set the custom appearance 
             }
         );
